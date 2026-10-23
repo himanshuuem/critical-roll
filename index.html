@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Critical Roll — RPG Dice Roller</title>
+  <meta name="description" content="A fair, animated RPG dice roller: d4 to d20, modifiers, advantage, history and a two-player duel.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Inter:wght@400;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <h1>Critical <span>Roll</span></h1>
+    <div class="tabs" role="tablist" aria-label="Mode">
+      <button role="tab" id="tab-roll" aria-controls="panel-roll" aria-selected="true">Roll</button>
+      <button role="tab" id="tab-duel" aria-controls="panel-duel" aria-selected="false" tabindex="-1">Duel</button>
+    </div>
+  </header>
+
+  <main>
+    <section id="panel-roll" role="tabpanel" aria-labelledby="tab-roll" class="panel">
+      <div class="die-picker" role="radiogroup" aria-label="Die type"></div>
+
+      <div class="controls">
+        <label>Dice
+          <span class="stepper">
+            <button type="button" data-step="count" data-delta="-1" aria-label="Fewer dice">−</button>
+            <output id="count">1</output>
+            <button type="button" data-step="count" data-delta="1" aria-label="More dice">+</button>
+          </span>
+        </label>
+        <label>Modifier
+          <span class="stepper">
+            <button type="button" data-step="modifier" data-delta="-1" aria-label="Decrease modifier">−</button>
+            <output id="modifier">+0</output>
+            <button type="button" data-step="modifier" data-delta="1" aria-label="Increase modifier">+</button>
+          </span>
+        </label>
+        <label>Mode
+          <select id="mode">
+            <option value="normal">Normal</option>
+            <option value="advantage">Advantage</option>
+            <option value="disadvantage">Disadvantage</option>
+          </select>
+        </label>
+      </div>
+
+      <div class="table" aria-live="polite">
+        <div class="dice-tray"></div>
+        <p class="total"><span class="total-value">—</span><span class="total-label">Press Roll or hit R</span></p>
+      </div>
+
+      <button type="button" class="roll-btn" id="rollBtn">🎲 Roll <span class="expr">1d20</span></button>
+
+      <section class="history">
+        <div class="history-head">
+          <h2>Roll log</h2>
+          <button type="button" class="link-btn" id="clearHistory">Clear</button>
+        </div>
+        <ol id="historyList"></ol>
+      </section>
+    </section>
+
+    <section id="panel-duel" role="tabpanel" aria-labelledby="tab-duel" class="panel" hidden>
+      <p class="duel-intro">Two adventurers, one d20 each. Highest roll wins the round. First to 3 takes the crown.</p>
+      <div class="duel">
+        <div class="duelist" data-player="p1">
+          <input class="name-input" value="Aria" aria-label="Player 1 name" maxlength="16">
+          <div class="duel-die" aria-hidden="true">?</div>
+          <p class="score">0</p>
+        </div>
+        <p class="vs">VS</p>
+        <div class="duelist" data-player="p2">
+          <input class="name-input" value="Borin" aria-label="Player 2 name" maxlength="16">
+          <div class="duel-die" aria-hidden="true">?</div>
+          <p class="score">0</p>
+        </div>
+      </div>
+      <p class="duel-result" aria-live="polite">Ready when you are.</p>
+      <div class="duel-actions">
+        <button type="button" class="roll-btn" id="duelBtn">⚔️ Duel!</button>
+        <button type="button" class="link-btn" id="duelReset">Reset match</button>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">Fair rolls via <code>crypto.getRandomValues</code> + rejection sampling · Built by <a href="https://github.com/himanshuuem">Himanshu</a></footer>
+
+  <script type="module" src="app.js"></script>
+</body>
+</html>
